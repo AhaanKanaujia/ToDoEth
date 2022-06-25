@@ -43,6 +43,7 @@ App = {
 
     loadAccount: async () => {
         App.account = web3.eth.accounts[0];
+        web3.eth.defaultAccount = web3.eth.accounts[0];
     },
 
     loadSmartContract: async () => {
@@ -81,13 +82,10 @@ App = {
         for (var i = 1; i <= taskCounter; i++) {
             const currTask = await App.ToDoList.tasks(i)
             const taskID = currTask[0].toNumber()
-            const taskTitle = currTask[1]
-            const taskContent = currTask[2]
-            const taskPriority = currTask[3]
-            const taskCompleted = currTask[4]
+            const taskContent = currTask[1]
+            const taskCompleted = currTask[2]
 
             const $newTaskTemplate = $taskTemplate.clone()
-            $newTaskTemplate.find('.title').html(taskTitle)
             $newTaskTemplate.find('.content').html(taskContent)
             $newTaskTemplate.find('input')
                 .prop('name', taskID)
@@ -102,6 +100,13 @@ App = {
 
             $newTaskTemplate.show()
         }
+    },
+
+    createTask: async () => {
+        App.setLoading(true);
+        const content = $('#newTask').val();
+        await App.ToDoList.addTask(content);
+        window.location.reload();
     }
 }
 
