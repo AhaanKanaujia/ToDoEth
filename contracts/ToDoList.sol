@@ -11,9 +11,7 @@ contract ToDoList {
 
     mapping(uint => Task) public tasks;
 
-    constructor() public {
-        addTask("Welcome to ToDoETH, A Smart Contract based to do list application on Ethereum");
-    }
+    constructor() public {}
 
     event addedTask(
         uint id,
